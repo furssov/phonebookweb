@@ -1,4 +1,4 @@
-package com.example.springweb;
+package com.example.springweb.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,9 @@ public class ControllerTest {
     @Test
     public void homeTest() throws Exception
     {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("home"))
-                .andExpect(content().string(containsString("Welcome!")));
+       mockMvc.perform(get("/"))
+               .andExpect(status().isOk())
+               .andExpect(view().name("startPage"))
+               .andExpect(content().string(containsString("Menu:")));
     }
 }
