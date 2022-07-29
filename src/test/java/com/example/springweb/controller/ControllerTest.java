@@ -29,4 +29,5 @@ public class ControllerTest {
                .andExpect(view().name("startPage"))
                .andExpect(content().string(containsString("Menu:")));
     }
+    
 }

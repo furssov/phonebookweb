@@ -1,12 +1,7 @@
 package com.example.springweb;
 
-import com.example.springweb.models.Contact;
-import com.mysql.jdbc.Driver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.sql.*;
-import java.util.Properties;
 
 @SpringBootApplication
 public class SpringWebApplication {

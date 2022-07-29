@@ -1,5 +1,7 @@
 package com.example.springweb.controller;
 
+import com.example.springweb.dao.ContactDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,17 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/phonebook")
 public class PhonebookController {
 
+    private ContactDao contactDao;
+     @Autowired
+    public PhonebookController(ContactDao contactDao) {
+        this.contactDao = contactDao;
+    }
+
     @GetMapping
-    public String peopleList(Model model)
+    public String contactsList(Model model)
     {
-        //Получаем список всех люедй из записной книги
-        return null;
+        model.addAttribute("people",contactDao.showList());
+        return "phonebook/contacts";
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model)
+    public String showContact(@PathVariable("id") int id, Model model)
     {
-        //Получаем конкретного человека по айди
-        return null;
+        model.addAttribute("person", contactDao.getByIndex(id));
+        return "phonebook/contact";
     }
 }

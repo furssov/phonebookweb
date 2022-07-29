@@ -5,8 +5,7 @@
     <title>phonebook</title>
 </head>
 <body>
-<img height="120px" th:src="@{/images/mainIcon.png}"/>
-<p><h1>Menu:</h1></p>
-<h2><a th:href="@{/phonebook}">Contacts</a></h2>
+<h1>It is:</h1><h2 th:text="${person.getName()}"/>
+<h1>Number:</h1><h2 th:text="${person.getNumber()}"/>
 </body>
 </html>
