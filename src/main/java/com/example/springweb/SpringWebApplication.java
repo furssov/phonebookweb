@@ -1,5 +1,6 @@
 package com.example.springweb;
 
+import com.example.springweb.models.Contact;
 import com.mysql.jdbc.Driver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,7 @@ public class SpringWebApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(SpringWebApplication.class, args);
+
         /*
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
