@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>phonebook</title>
@@ -8,5 +8,6 @@
 <img height="120px" th:src="@{/images/mainIcon.png}"/>
 <p><h1>Menu:</h1></p>
 <h2><a th:href="@{/phonebook}">Contacts</a></h2>
+<h2><a th:href="@{/phonebook/new}">Create contact</a></h2>
 </body>
 </html>

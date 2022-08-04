@@ -1,12 +1,14 @@
 package com.example.springweb.controller;
 
 import com.example.springweb.dao.ContactDao;
+import com.example.springweb.models.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/phonebook")
@@ -18,7 +20,7 @@ public class PhonebookController {
         this.contactDao = contactDao;
     }
 
-    @GetMapping
+    @GetMapping()
     public String contactsList(Model model)
     {
         model.addAttribute("people",contactDao.showList());
@@ -30,5 +32,44 @@ public class PhonebookController {
     {
         model.addAttribute("person", contactDao.getByIndex(id));
         return "phonebook/contact";
+    }
+
+    @GetMapping("/new")
+    public String addContact(Model model)
+    {
+        model.addAttribute("person", new Contact());
+        return "phonebook/addContact";
+    }
+
+    @PostMapping()
+    public String create(@ModelAttribute("person") @Valid Contact contact, BindingResult bindingResult)
+    {
+        if (bindingResult.hasErrors())
+        {
+            return "phonebook/addContact";
+        }
+        contactDao.save(contact);
+        return "redirect:/phonebook";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model)
+    {
+            model.addAttribute("person", contactDao.getByIndex(id));
+            return "phonebook/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") Contact contact, @PathVariable("id") int id)
+    {
+        contactDao.update(id, contact);
+        return "redirect:/phonebook";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id)
+    {
+        contactDao.delete(id);
+        return "redirect:/phonebook";
     }
 }
