@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/phonebook")
@@ -21,15 +22,13 @@ public class PhonebookController {
     }
 
     @GetMapping()
-    public String contactsList(Model model)
-    {
-        model.addAttribute("people",contactDao.showList());
+    public String contactsList(Model model) throws SQLException {
+        model.addAttribute("people", contactDao.showList());
         return "phonebook/contacts";
     }
 
     @GetMapping("/{id}")
-    public String showContact(@PathVariable("id") int id, Model model)
-    {
+    public String showContact(@PathVariable("id") int id, Model model) throws SQLException {
         model.addAttribute("person", contactDao.getByIndex(id));
         return "phonebook/contact";
     }
@@ -42,8 +41,7 @@ public class PhonebookController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("person") @Valid Contact contact, BindingResult bindingResult)
-    {
+    public String create(@ModelAttribute("person") @Valid Contact contact, BindingResult bindingResult) throws SQLException {
         if (bindingResult.hasErrors())
         {
             return "phonebook/addContact";
@@ -53,22 +51,19 @@ public class PhonebookController {
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model)
-    {
+    public String edit(@PathVariable("id") int id, Model model) throws SQLException {
             model.addAttribute("person", contactDao.getByIndex(id));
             return "phonebook/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Contact contact, @PathVariable("id") int id)
-    {
+    public String update(@ModelAttribute("person") Contact contact, @PathVariable("id") int id) throws SQLException {
         contactDao.update(id, contact);
         return "redirect:/phonebook";
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id)
-    {
+    public String delete(@PathVariable("id") int id) throws SQLException {
         contactDao.delete(id);
         return "redirect:/phonebook";
     }
